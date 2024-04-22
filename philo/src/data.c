@@ -6,13 +6,32 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/19 17:01:54 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:26:34 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_forks(t_data *data)
+void	clean_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->forks)
+	{
+		while (i < data->seats)
+			pthread_mutex_destroy(&data->forks[i++]);
+		free (data->forks);
+		data->forks = NULL;
+	}
+	if (data->philos)
+	{
+		free(data->philos);
+		data->philos = NULL;
+	}
+}
+
+static int	init_forks(t_data *data)
 {
 	int	i;
 
@@ -28,16 +47,16 @@ int	init_forks(t_data *data)
 		if (pthread_mutex_init(&data->forks[i++], NULL))
 		{
 			data->error = "memory allocation error";
-			
+			return (KO);
 		}
 	}
 }
 
-int	init_philos(t_data *data)
+static int	init_philos(t_data *data)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	data->philos = malloc(data->seats * sizeof(t_philo));
 	if (!data->philos)
 	{
@@ -46,7 +65,18 @@ int	init_philos(t_data *data)
 	}
 	while (i <= data->seats)
 	{
-		
+		data->philos[i].id = i + 1;
+		data->philos[i].meal_count = 0;
+		data->philos[i].eating_flag = 0;
+		data->philos[i].dead_flag = 0;
+		data->philos[i].start_time = 0;
+		data->philos[i].last_meal = 0;
+		data->philos[i].rfork = &data->forks[i];
+		if (i == 0)
+			data->philos[i].lfork = &data->forks[data->seats - 1];
+		else
+			data->philos[i].lfork = &data->forks[i - 1];
+		data->philos[i].last_meal = 0;
 	}
 }
 

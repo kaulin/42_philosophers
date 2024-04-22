@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:35:49 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/19 16:00:51 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:11:41 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static int	check_number_form(char *str)
 	return (OK);
 }
 
+/*
+Skips through whitespace and returns index of first non-whitespace character.
+*/
 static int	skip_whitespace(const char *str)
 {
 	int	i;
@@ -50,6 +53,9 @@ static int	skip_whitespace(const char *str)
 	return (i);
 }
 
+/*
+Coverts a string into a long int.
+*/
 static long int	ft_atol(const char *str)
 {
 	long	num;
@@ -79,10 +85,16 @@ static long int	ft_atol(const char *str)
 	return (sign * num);
 }
 
+/*
+Converts a string to an integer and stores it in the given int pointer. 
+Returns OK (0) if conversion was successful, KO (1) if it was not. This could 
+be because the string doesn't comply with number format or the value was 
+outside the integer range.
+*/
 int	get_int_from_string(int *dest, char *str)
 {
 	long int	n;
-	
+
 	if (check_number_form(str))
 		return (KO);
 	n = ft_atol(str);

@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/19 16:49:21 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:37:00 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_data
-{
-	int				dead_flag;
-	int				seats;
-	int				meal_target;
-	int				die_time;
-	int				eat_time;
-	int				sleep_time;
-	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	char			*error;
-}	t_data;
-
 typedef struct s_philo
 {
 	pthread_t		thread;
@@ -50,15 +37,30 @@ typedef struct s_philo
 	size_t			last_meal;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
-	t_philo			*next;
 }	t_philo;
 
-// clean.c
+typedef struct s_data
+{
+	int				dead_flag;
+	int				seats;
+	int				meal_target;
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
+	t_philo			*philos;
+	pthread_t		monitor;
+	pthread_mutex_t	*forks;
+	char			*error;
+}	t_data;
+
+// data.c
 void	clean_data(t_data *data);
+int		init_data(int argc, char *argv[], t_data *data);
 
-// init.c
-int	init_data(int argc, char *argv[], t_data *data);
+// get_int_from_string.c
+int		get_int_from_string(int *dest, char *str);
 
-
+// threads.c
+int		start_threads(t_data *data);
 
 #endif
