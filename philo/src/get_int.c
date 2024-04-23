@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_int_from_string.c                              :+:      :+:    :+:   */
+/*   get_int.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:35:49 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/22 16:11:41 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:51:32 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ Returns OK (0) if conversion was successful, KO (1) if it was not. This could
 be because the string doesn't comply with number format or the value was 
 outside the integer range.
 */
-int	get_int_from_string(int *dest, char *str)
+int	get_int(int *dest, char *str)
 {
 	long int	n;
 

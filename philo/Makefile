@@ -6,19 +6,21 @@
 #    By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 15:00:04 by jajuntti          #+#    #+#              #
-#    Updated: 2024/04/22 17:40:01 by jajuntti         ###   ########.fr        #
+#    Updated: 2024/04/23 14:33:58 by jajuntti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRC_DIR = src/
 SRC = philo.c \
-	get_int_from_string.c \
 	data.c \
-	threads.c
+	get_int.c \
+	threads.c \
+	time.c \
+	utils.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 INC_DIR = inc/

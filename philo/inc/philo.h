@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/22 17:37:00 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:46:27 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	size_t			last_meal;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*print_lock;
 }	t_philo;
 
 typedef struct s_data
@@ -50,6 +51,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_lock;
 	char			*error;
 }	t_data;
 
@@ -58,9 +60,20 @@ void	clean_data(t_data *data);
 int		init_data(int argc, char *argv[], t_data *data);
 
 // get_int_from_string.c
-int		get_int_from_string(int *dest, char *str);
+int		get_int(int *dest, char *str);
 
 // threads.c
+int		join_threads(t_data *data);
 int		start_threads(t_data *data);
+
+// time.c
+size_t	get_time_since(size_t start_time);
+size_t	get_time(void);
+
+// utils.c
+char	*ft_strchr(const char *s, int c);
+int		ft_isdigit(int c);
+void	print_data(t_data *data);
+void	print_philo(t_philo *philo);
 
 #endif
