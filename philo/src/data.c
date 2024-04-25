@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/23 14:15:58 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:32:25 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,15 @@ static int	init_philos(t_data *data)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].meal_count = 0;
-		data->philos[i].eating_flag = 0;
 		data->philos[i].dead_flag = 0;
-		data->philos[i].start_time = 0;
 		data->philos[i].last_meal = 0;
 		data->philos[i].rfork = &data->forks[i];
 		if (i == 0)
 			data->philos[i].lfork = &data->forks[data->seats - 1];
 		else
 			data->philos[i].lfork = &data->forks[i - 1];
-		data->philos[i++].print_lock = &data->print_lock;
+		data->philos[i].print_lock = &data->print_lock;
+		data->philos[i++].data = data;
 	}
 	return (OK);
 }

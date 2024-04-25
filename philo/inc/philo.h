@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/23 14:46:27 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:06:29 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #  define KO -1
 # endif
 
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
@@ -31,13 +32,13 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				meal_count;
-	int				eating_flag;
 	int				dead_flag;
-	size_t			start_time;
+	size_t			time_stamp;
 	size_t			last_meal;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*print_lock;
+	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data
@@ -48,6 +49,7 @@ typedef struct s_data
 	int				die_time;
 	int				eat_time;
 	int				sleep_time;
+	size_t			start_time;
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;

@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/23 14:45:12 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:45:11 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	print_philo(t_philo *philo)
 	printf("lfork: %x\n", (int)philo->lfork);
 	printf("rfork: %x\n", (int)philo->rfork);
 	printf("meal_count: %d\n", philo->meal_count);
-	printf("eating_flag: %d\n", philo->eating_flag);
 	printf("dead_flag: %d\n", philo->dead_flag);
 	printf("print_lock: %x\n", (int)philo->print_lock);
 	printf("\n");

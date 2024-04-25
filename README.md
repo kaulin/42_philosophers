@@ -27,3 +27,6 @@ TODO
 
 ## Acknowledgements
 - Peer evaluators: XXX
+
+## Resources
+Combeau, M. (2022, November 2). Threads, mutexes and concurrent programming in C. https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/
