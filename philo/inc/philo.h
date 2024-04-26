@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/26 16:07:10 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:27:42 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ typedef struct s_data
 	pthread_mutex_t	reservation;
 	char			*error;
 }	t_data;
+
+// actions.c
+void	eat(t_philo philo);
+void	sleep(t_philo philo);
+void	think(t_philo philo);
 
 // data.c
 void	clean_data(t_data *data);

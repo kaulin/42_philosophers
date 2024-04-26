@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:10:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/26 16:11:06 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:26:50 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static void	*philo_routine(void *arg)
 	pthread_mutex_lock(philo->reservation);
 	print_philo(philo);
 	pthread_mutex_unlock(philo->reservation);
+	while ("true")
+	{
+		eat(philo);
+		sleep(philo);
+		think(philo);
+	}
 	return (NULL);
 }
 

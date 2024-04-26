@@ -6,7 +6,7 @@
 #    By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 15:00:04 by jajuntti          #+#    #+#              #
-#    Updated: 2024/04/23 15:11:25 by jajuntti         ###   ########.fr        #
+#    Updated: 2024/04/26 16:28:03 by jajuntti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 SRC_DIR = src/
 SRC = philo.c \
+	actions.c \
 	data.c \
 	get_int.c \
 	threads.c \
