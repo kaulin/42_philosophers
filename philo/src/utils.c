@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/24 10:45:11 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:47:51 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	print_data(t_data *data)
 	printf("die_time: %d\n", data->die_time);
 	printf("eat_time: %d\n", data->eat_time);
 	printf("sleep_time: %d\n", data->sleep_time);
+	printf("start_time: %zu\n", data->start_time);
 	printf("error: %s\n", data->error);
 	printf("\nFORKS\n");
 	while (i < data->seats)
@@ -63,7 +64,7 @@ void	print_data(t_data *data)
 	while (i < data->seats)
 	{
 		printf("philo %d [%x] id: %d\n", i, (int)&data->philos[i], data->philos[i].id);
-		printf("print_lock: %x\n", (int)&data->philos[i].print_lock);
+		printf("print_lock: %x\n", (int)&data->philos[i].reservation);
 		i++;
 	}
 	printf("\n");
@@ -73,11 +74,10 @@ void	print_philo(t_philo *philo)
 {
 	printf("PHILO ");
 	printf("id: %d @ %x\n", philo->id, (int)philo);
-	printf("start_time: %zu\n", philo->start_time);
 	printf("lfork: %x\n", (int)philo->lfork);
 	printf("rfork: %x\n", (int)philo->rfork);
 	printf("meal_count: %d\n", philo->meal_count);
 	printf("dead_flag: %d\n", philo->dead_flag);
-	printf("print_lock: %x\n", (int)philo->print_lock);
+	printf("print_lock: %x\n", (int)philo->reservation);
 	printf("\n");
 }

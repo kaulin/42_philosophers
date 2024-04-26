@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/23 14:28:20 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:06:57 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 		return (usage());
 	if (init_data(argc, argv, &data))
 		return (fail(&data));
-	if (start_threads(&data) || join_threads(&data))
+	if (start_threads(&data) || join_monitor(&data))
 		return (fail(&data));
 	clean_data(&data);
 	return (OK);

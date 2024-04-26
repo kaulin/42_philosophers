@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:10:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/25 09:31:55 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:11:06 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	*philo_routine(void *arg)
 	philo = arg;
 	if (philo->id % 2)
 		usleep(100);
-	pthread_mutex_lock(philo->print_lock);
+	pthread_mutex_lock(philo->reservation);
 	print_philo(philo);
-	pthread_mutex_unlock(philo->print_lock);
+	pthread_mutex_unlock(philo->reservation);
 	return (NULL);
 }
 
@@ -35,32 +35,17 @@ static void	*monitor_routine(void *arg)
 	int		i;
 
 	data = arg;
-	while (!data->dead_flag)
+	i = 0;
+	while ("true")
 	{
-		i = 0;
-		while (i < data->seats)
-		{
-			if (data->philos[i].dead_flag);
-		}
-		i++;
+		if (++i == data->seats)
+			i = 0;
 	}
 	return (NULL);
 }
 
-int	join_threads(t_data *data)
+int	join_monitor(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->seats)
-	{
-		if (pthread_join(data->philos[i].thread, NULL))
-		{
-			data->error = "joining threads failed";
-			return (KO);
-		}
-		i++;
-	}
 	if (pthread_join(data->monitor, NULL))
 	{
 		data->error = "joining threads failed";
@@ -80,10 +65,13 @@ int	start_threads(t_data *data)
 	{
 		this = &data->philos[i];
 		if (pthread_create(&this->thread, NULL, &philo_routine, this))
-		{
 			data->error = "multithreading failed";
+		if (data->error)
 			return (KO);
-		}
+		if (pthread_detach(data->philos[i].thread))
+			data->error = "detaching threads failed";
+		if (data->error)
+			return (KO);
 		i++;
 	}
 	if (pthread_create(&data->monitor, NULL, &monitor_routine, data))

@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/24 11:06:29 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:07:10 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_philo
 	size_t			last_meal;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
-	pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*reservation;
 	struct s_data	*data;
 }	t_philo;
 
@@ -53,7 +53,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_lock;
+	pthread_mutex_t	reservation;
 	char			*error;
 }	t_data;
 
@@ -65,7 +65,7 @@ int		init_data(int argc, char *argv[], t_data *data);
 int		get_int(int *dest, char *str);
 
 // threads.c
-int		join_threads(t_data *data);
+int		join_monitor(t_data *data);
 int		start_threads(t_data *data);
 
 // time.c
