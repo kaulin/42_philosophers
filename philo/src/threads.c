@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:10:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/26 16:26:50 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:39:09 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ static void	*philo_routine(void *arg)
 
 	philo = arg;
 	if (philo->id % 2)
-		usleep(100);
-	pthread_mutex_lock(philo->reservation);
+		usleep(50);
+	pthread_mutex_lock(philo->limiter);
 	print_philo(philo);
-	pthread_mutex_unlock(philo->reservation);
-	while ("true")
+	pthread_mutex_unlock(philo->limiter);
+	while (all_alive(philo->data))
 	{
+		printf("%d is looking for forks\n", philo->id);
 		eat(philo);
-		sleep(philo);
+		printf("%d is gonna nap after eating\n", philo->id);
+		nap(philo);
+		printf("%d is awake and ready to think\n", philo->id);
 		think(philo);
 	}
 	return (NULL);
@@ -39,12 +42,31 @@ static void	*monitor_routine(void *arg)
 {
 	t_data	*data;
 	int		i;
+	int		enough_meals;
 
 	data = arg;
 	i = 0;
-	while ("true")
+	printf("Monitor started! [x%x]\n", (unsigned int)&data->monitor);
+	while (all_alive(data) || enough_meals)
 	{
-		if (++i == data->seats)
+		printf("Monitor checking philo id %d\n", data->philos[i].id);
+		enough_meals = 1;
+		pthread_mutex_lock(&data->limiter);
+		printf("Monitor checking philo id %d mealcount\n", data->philos[i].id);
+		if (data->meal_target > 0 && data->philos[i].meal_count < data->meal_target)
+			enough_meals = 0;
+		printf("Monitor checking philo id %d time since last meal\n", data->philos[i].id);
+		if (get_time_since(data->philos[i].last_meal > (size_t)data->die_time))
+		{
+			print_status(&data->philos[i], "died");
+			data->alive = 0;
+			pthread_mutex_unlock(&data->limiter);
+			break ;
+		}
+		pthread_mutex_unlock(&data->limiter);
+		printf("Monitor done checking philo id %d\n", data->philos[i].id);
+		i++;
+		if (i == data->seats)
 			i = 0;
 	}
 	return (NULL);

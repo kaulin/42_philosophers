@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/26 16:17:29 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:34:09 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	clean_data(t_data *data)
 		free (data->forks);
 		data->forks = NULL;
 	}
-	pthread_mutex_destroy(&data->reservation);
+	pthread_mutex_destroy(&data->limiter);
 	if (data->philos)
 	{
 		free(data->philos);
@@ -88,14 +88,13 @@ static int	init_philos(t_data *data)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].meal_count = 0;
-		data->philos[i].dead_flag = 0;
-		data->philos[i].last_meal = 0;
+		data->philos[i].last_meal = data->start_time;
 		data->philos[i].rfork = &data->forks[i];
 		if (i == 0)
 			data->philos[i].lfork = &data->forks[data->seats - 1];
 		else
 			data->philos[i].lfork = &data->forks[i - 1];
-		data->philos[i].reservation = &data->reservation;
+		data->philos[i].limiter = &data->limiter;
 		data->philos[i++].data = data;
 	}
 	return (OK);
@@ -103,7 +102,7 @@ static int	init_philos(t_data *data)
 
 int	init_data(int argc, char *argv[], t_data *data)
 {
-	data->dead_flag = 0;
+	data->alive = 1;
 	data->meal_target = -1;
 	data->philos = NULL;
 	data->forks = NULL;
@@ -114,7 +113,7 @@ int	init_data(int argc, char *argv[], t_data *data)
 		|| get_int(&data->sleep_time, argv[4]) \
 		|| (argc == 6 && get_int(&data->meal_target, argv[5])))
 		data->error = "problem parsing arguments";
-	if (pthread_mutex_init(&data->reservation, NULL))
+	if (pthread_mutex_init(&data->limiter, NULL))
 		data->error = "memory allocation error";
 	if (data->error)	
 		return (KO);

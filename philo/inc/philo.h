@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/26 16:27:42 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:26:51 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,16 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				meal_count;
-	int				dead_flag;
-	size_t			time_stamp;
 	size_t			last_meal;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
-	pthread_mutex_t	*reservation;
+	pthread_mutex_t	*limiter;
 	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				dead_flag;
+	int				alive;
 	int				seats;
 	int				meal_target;
 	int				die_time;
@@ -53,14 +51,16 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	reservation;
+	pthread_mutex_t	limiter;
 	char			*error;
 }	t_data;
 
 // actions.c
-void	eat(t_philo philo);
-void	sleep(t_philo philo);
-void	think(t_philo philo);
+void	eat(t_philo *philo);
+void	nap(t_philo *philo);
+void	think(t_philo *philo);
+int		all_alive(t_data *data);
+void	print_status(t_philo *philo, char *msg);
 
 // data.c
 void	clean_data(t_data *data);
