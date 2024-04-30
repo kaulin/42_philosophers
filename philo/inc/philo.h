@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/29 15:26:51 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:52:32 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	limiter;
+	pthread_mutex_t	*limiter;
 	char			*error;
 }	t_data;
 
@@ -59,7 +59,6 @@ typedef struct s_data
 void	eat(t_philo *philo);
 void	nap(t_philo *philo);
 void	think(t_philo *philo);
-int		all_alive(t_data *data);
 void	print_status(t_philo *philo, char *msg);
 
 // data.c

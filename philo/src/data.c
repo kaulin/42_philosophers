@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/29 15:34:09 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:32:06 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	clean_data(t_data *data)
 		free (data->forks);
 		data->forks = NULL;
 	}
-	pthread_mutex_destroy(&data->limiter);
+	if (data->limiter)
+	{
+		pthread_mutex_destroy(data->limiter);
+		free(data->limiter);
+	}
 	if (data->philos)
 	{
 		free(data->philos);
@@ -94,13 +98,13 @@ static int	init_philos(t_data *data)
 			data->philos[i].lfork = &data->forks[data->seats - 1];
 		else
 			data->philos[i].lfork = &data->forks[i - 1];
-		data->philos[i].limiter = &data->limiter;
+		data->philos[i].limiter = data->limiter;
 		data->philos[i++].data = data;
 	}
 	return (OK);
 }
 
-int	init_data(int argc, char *argv[], t_data *data)
+int	init_data(int argc, char *argv[], t_data *data) 
 {
 	data->alive = 1;
 	data->meal_target = -1;
@@ -113,13 +117,12 @@ int	init_data(int argc, char *argv[], t_data *data)
 		|| get_int(&data->sleep_time, argv[4]) \
 		|| (argc == 6 && get_int(&data->meal_target, argv[5])))
 		data->error = "problem parsing arguments";
-	if (pthread_mutex_init(&data->limiter, NULL))
+	data->limiter = malloc(sizeof(pthread_t *));
+	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
 		data->error = "memory allocation error";
 	if (data->error)	
 		return (KO);
 	if (check_values(data) || init_forks(data) || init_philos(data))
 		return (KO);
-	data->start_time = get_time();
-	print_data(data);
 	return (OK);
 }

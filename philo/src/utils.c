@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/29 15:31:34 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:52:06 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	print_data(t_data *data)
 	printf("eat_time: %d\n", data->eat_time);
 	printf("sleep_time: %d\n", data->sleep_time);
 	printf("start_time: %zu\n", data->start_time);
+	printf("limiter: %x\n", (int)data->limiter);
 	printf("error: %s\n", data->error);
 	printf("\nFORKS\n");
 	while (i < data->seats)
