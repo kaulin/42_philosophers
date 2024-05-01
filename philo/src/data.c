@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/30 14:32:06 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:43:49 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ static int	check_values(t_data *data)
 		data->error = "must have at least one philosopher";
 	else if (data->seats > 200)
 		data->error = "the table only has 200 seats";
-	else if (data->die_time < 60 || data->eat_time < 60 \
-		|| data->sleep_time < 60)
-		data->error = "give philos at least 60ms to sleep/eat/die";
+	else if (data->die_time <= 0 || data->eat_time <= 0 \
+		|| data->sleep_time <= 0)
+		data->error = "give philosophers some time do eat, sleep and die";
+	else if (data->meal_target && data->meal_target < 1)
+		data->error = "meal target needs to be a positive integer";
 	if (data->error)
 		return (KO);
 	return (OK);
@@ -107,7 +109,7 @@ static int	init_philos(t_data *data)
 int	init_data(int argc, char *argv[], t_data *data) 
 {
 	data->alive = 1;
-	data->meal_target = -1;
+	data->meal_target = 0;
 	data->philos = NULL;
 	data->forks = NULL;
 	data->error = NULL;

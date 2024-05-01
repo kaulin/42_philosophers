@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/30 14:52:32 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:19:02 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_data
 
 // actions.c
 void	eat(t_philo *philo);
-void	nap(t_philo *philo);
 void	think(t_philo *philo);
 void	print_status(t_philo *philo, char *msg);
 
@@ -75,6 +74,7 @@ int		start_threads(t_data *data);
 // time.c
 size_t	get_time_since(size_t start_time);
 size_t	get_time(void);
+void	time_travel(size_t time);
 
 // utils.c
 char	*ft_strchr(const char *s, int c);

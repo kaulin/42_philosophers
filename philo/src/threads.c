@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:10:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/30 14:53:38 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:19:33 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ static void	*philo_routine(void *arg)
 
 	philo = arg;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		time_travel(10);
 	while (1)
 	{
-		eat(philo);
-		nap(philo);
-		think(philo);
+		if (philo->data->alive)
+			eat(philo);
+		if (philo->data->alive)
+		{
+			print_status(philo, "is sleeping");
+			time_travel(philo->data->sleep_time);
+		}
+		if (philo->data->alive)
+			think(philo);
 	}
 	return (NULL);
 }
@@ -36,14 +42,16 @@ static void	*monitor_routine(void *arg)
 {
 	t_data	*data;
 	int		i;
+	int		fed_up;
 
 	data = arg;
 	i = 0;
+	fed_up = 1;
 	while (data->alive)
 	{
 		pthread_mutex_lock(data->limiter);
-		//if (data->meal_target > 0 && data->philos[i].meal_count < data->meal_target)
-		//	enough_meals = 0;
+		if (data->meal_target && data->philos[i].meal_count < data->meal_target)
+			fed_up = 0;
 		if (get_time_since(data->philos[i].last_meal) > (size_t)data->die_time)
 		{
 			data->alive = 0;
@@ -53,7 +61,13 @@ static void	*monitor_routine(void *arg)
 		}
 		pthread_mutex_unlock(data->limiter);
 		if (++i == data->seats)
+		{
+			if (data->meal_target && fed_up)
+				break ;
+			fed_up = 1;
 			i = 0;
+		}
+			
 	}
 	return (NULL);
 }
