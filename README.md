@@ -16,14 +16,8 @@ Git clone the repository, move into it and run `make` to compile the program.
 ## Usage
 TODO
 
-## Implementation
-TODO
-
-### Solution
-
-### Optimisations
-
-### Possible improvements
+## Problems encountered
+- 
 
 ## Acknowledgements
 - Peer evaluators: XXX

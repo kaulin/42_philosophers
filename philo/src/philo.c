@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 15:14:51 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:25:40 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ static void	*philo_routine(void *arg)
 	{
 		if (philo->data->alive_n_hungry)
 			eat(philo);
+		pthread_mutex_unlock(philo->lfork);
+		pthread_mutex_unlock(philo->rfork);
 		if (philo->data->alive_n_hungry)
-		{
-			print_status(philo, "is sleeping");
-			time_travel(philo->data->sleep_time);
-		}
+			nap(philo);
 		if (philo->data->alive_n_hungry)
 			think(philo);
 	}

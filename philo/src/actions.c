@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 15:15:53 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:27:54 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	print_status(t_philo *philo, char *msg)
 	timestamp = get_time_since(philo->data->start_time);
 	printf("%zums %d %s\n", timestamp, philo->id, msg);
 	pthread_mutex_unlock(philo->limiter);
-}
-
-static void	release_forks(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->lfork);
-	pthread_mutex_unlock(philo->rfork);
 }
 
 static void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
@@ -64,8 +58,13 @@ void	eat(t_philo *philo)
 	}
 }
 
+static void	nap(t_philo *philo)
+{
+	print_status(philo, "is sleeping");
+	time_travel(philo->data->sleep_time);
+}
+
 void	think(t_philo *philo)
 {
-	if (philo->data->alive_n_hungry)
-		print_status(philo, "is thinking");
+	print_status(philo, "is thinking");
 }
