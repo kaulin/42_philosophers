@@ -6,7 +6,7 @@
 #    By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 15:00:04 by jajuntti          #+#    #+#              #
-#    Updated: 2024/04/30 10:25:22 by jajuntti         ###   ########.fr        #
+#    Updated: 2024/05/02 15:10:51 by jajuntti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRC = philo.c \
 	actions.c \
 	data.c \
 	get_int.c \
-	threads.c \
 	time.c \
 	utils.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

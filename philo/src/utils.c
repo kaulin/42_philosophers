@@ -6,11 +6,25 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 13:44:23 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:16:55 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	all_fed(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->seats)
+	{
+		if (data->hungry_ones[i])
+			return (KO);
+		i++;
+	}
+	return (OK);
+}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -39,45 +53,16 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-void	print_data(t_data *data)
+int	usage(void)
 {
-	int	i;
-
-	i = 0;
-	printf("DATA\n");
-	printf("dead_flag: %d\n", data->alive_n_hungry);
-	printf("seats: %d\n", data->seats);
-	printf("meals: %d\n", data->meals);
-	printf("die_time: %d\n", data->die_time);
-	printf("eat_time: %d\n", data->eat_time);
-	printf("sleep_time: %d\n", data->sleep_time);
-	printf("start_time: %zu\n", data->start_time);
-	printf("limiter: %x\n", (int)data->limiter);
-	printf("error: %s\n", data->error);
-	printf("\nFORKS\n");
-	while (i < data->seats)
-	{
-		printf("Fork %d @ %x\n", i, (int)&data->forks[i]);
-		i++;
-	}
-	i = 0;
-	printf("\nPHILOS\n");
-	while (i < data->seats)
-	{
-		printf("philo %d [%x] id: %d\n", i, (int)&data->philos[i], data->philos[i].id);
-		printf("limiter: %x\n", (int)&data->philos[i].limiter);
-		i++;
-	}
-	printf("\n");
+	printf("usage: ./philo number_of_philosophers time_to_die time_to_eat");
+	printf(" /time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+	return (2);
 }
 
-void	print_philo(t_philo *philo)
+int	fail(t_data *data)
 {
-	printf("PHILO ");
-	printf("id: %d @ %x\n", philo->id, (int)philo);
-	printf("lfork: %x\n", (int)philo->lfork);
-	printf("rfork: %x\n", (int)philo->rfork);
-	printf("meal_count: %d\n", philo->meal_count);
-	printf("limiter: %x\n", (int)philo->limiter);
-	printf("\n");
+	printf("Error: %s\n", data->error);
+	clean_data(data);
+	return (KO);
 }

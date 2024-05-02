@@ -6,17 +6,11 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 13:55:02 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:15:53 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	release_forks(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->lfork);
-	pthread_mutex_unlock(philo->rfork);
-}
 
 void	print_status(t_philo *philo, char *msg)
 {
@@ -28,7 +22,13 @@ void	print_status(t_philo *philo, char *msg)
 	pthread_mutex_unlock(philo->limiter);
 }
 
-void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
+static void	release_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->lfork);
+	pthread_mutex_unlock(philo->rfork);
+}
+
+static void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
 {
 	if (philo->data->alive_n_hungry)
 		pthread_mutex_lock(fork);
@@ -40,7 +40,6 @@ void	eat(t_philo *philo)
 {
 	if (philo->id % 2)
 	{
-		
 		grab_fork(philo, philo->lfork);
 		grab_fork(philo, philo->rfork);
 	}

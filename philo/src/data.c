@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 13:44:23 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:16:15 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	init_philos(t_data *data)
 	return (OK);
 }
 
-int	init_data(int argc, char *argv[], t_data *data) 
+int	init_data(int argc, char *argv[], t_data *data)
 {
 	data->alive_n_hungry = 1;
 	data->meals = 0;
