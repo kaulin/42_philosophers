@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 15:16:15 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:00:37 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	clean_data(t_data *data)
 		free(data->philos);
 }
 
+/*
+Checks that the values parsed from arguments are within acceptable ranges 
+and if not, sets a specific error message.
+*/
 static int	check(t_data *data)
 {
 	if (data->seats < 1)
@@ -47,7 +51,7 @@ static int	check(t_data *data)
 		data->error = "the table only has 200 seats";
 	else if (data->die_time <= 0 || data->eat_time <= 0 \
 		|| data->sleep_time <= 0)
-		data->error = "give philosophers some time do eat, sleep and die";
+		data->error = "give the philosophers some time do eat, sleep and die";
 	else if (data->meals && data->meals < 1)
 		data->error = "meal target needs to be a positive integer";
 	if (data->error)
@@ -55,6 +59,10 @@ static int	check(t_data *data)
 	return (OK);
 }
 
+/*
+Mallocs and initialises one fork mutex per philosopher present at the table. 
+Returns an error if mallocing or mutex initialising fails.
+*/
 static int	set_forks(t_data *data)
 {
 	int	i;
@@ -77,6 +85,11 @@ static int	set_forks(t_data *data)
 	return (OK);
 }
 
+/*
+Initialises the s_philo struct. Returns an error if mallocing for the struct 
+fails. The hunger status of the philo is linked to the hungry_ones in array 
+and the forks to the corresponding mutexes in data->forks.
+*/
 static int	init_philos(t_data *data)
 {
 	int	i;
@@ -106,6 +119,11 @@ static int	init_philos(t_data *data)
 	return (OK);
 }
 
+/*
+Initialises the given data struct with provided arguments. Converts arguments 
+to integers, checks their values, sets the fork mutexes and initialises the 
+philo structs.
+*/
 int	init_data(int argc, char *argv[], t_data *data)
 {
 	data->alive_n_hungry = 1;

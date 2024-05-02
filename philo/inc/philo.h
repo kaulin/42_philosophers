@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 16:28:42 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:43:17 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,28 @@ typedef struct s_data
 }	t_data;
 
 // actions.c
-void		eat(t_philo *philo);
-static void	nap(t_philo *philo);
-void		think(t_philo *philo);
-void		print_status(t_philo *philo, char *msg);
+void	eat(t_philo *philo);
+void	nap(t_philo *philo);
+void	think(t_philo *philo);
+void	print_status(t_philo *philo, char *msg);
 
 // data.c
-void		clean_data(t_data *data);
-int			init_data(int argc, char *argv[], t_data *data);
+void	clean_data(t_data *data);
+int		init_data(int argc, char *argv[], t_data *data);
 
 // get_int_from_string.c
-int			get_int(int *dest, char *str);
+int		get_int(int *dest, char *str);
 
 // time.c
-size_t		get_time_since(size_t start_time);
-size_t		get_time(void);
-void		time_travel(size_t time);
+size_t	get_time_since(size_t start_time);
+size_t	get_time(void);
+void	time_travel(size_t time);
 
 // utils.c
-int			all_fed(t_data *data);
-char		*ft_strchr(const char *s, int c);
-int			ft_isdigit(int c);
-int			usage(void);
-int			fail(t_data *data);
+int		all_fed(t_data *data);
+char	*ft_strchr(const char *s, int c);
+int		ft_isdigit(int c);
+int		usage(void);
+int		fail(t_data *data);
 
 #endif
