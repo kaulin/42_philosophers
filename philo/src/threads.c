@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 16:10:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 09:21:33 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:56:01 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,61 +26,34 @@ static void	*philo_routine(void *arg)
 		think(philo);
 		time_travel(10);
 	}
-	while (1)
+	while (philo->data->alive_n_hungry)
 	{
-		if (philo->data->alive)
+		if (philo->data->alive_n_hungry)
 			eat(philo);
-		if (philo->data->alive)
+		if (philo->data->alive_n_hungry)
 		{
 			print_status(philo, "is sleeping");
 			time_travel(philo->data->sleep_time);
 		}
-		if (philo->data->alive)
+		if (philo->data->alive_n_hungry)
 			think(philo);
 	}
 	return (NULL);
 }
 
-static void	*monitor_routine(void *arg)
+int	join_threads(t_data *data)
 {
-	t_data	*data;
-	int		i;
-	int		fed_up;
+	int	i;
 
-	data = arg;
 	i = 0;
-	fed_up = 1;
-	while (data->alive)
+	while (i < data->seats)
 	{
-		pthread_mutex_lock(data->limiter);
-		if (data->meal_target && data->philos[i].meal_count < data->meal_target)
-			fed_up = 0;
-		if (get_time_since(data->philos[i].last_meal) > (size_t)data->die_time)
+		if (pthread_join(data->philos[i].thread, NULL))
 		{
-			data->alive = 0;
-			pthread_mutex_unlock(data->limiter);
-			print_status(&data->philos[i], "died");
-			break ;
+			data->error = "joining threads failed";
+			return (KO);
 		}
-		pthread_mutex_unlock(data->limiter);
-		if (++i == data->seats)
-		{
-			if (data->meal_target && fed_up)
-				break ;
-			fed_up = 1;
-			i = 0;
-		}
-			
-	}
-	return (NULL);
-}
-
-int	join_monitor(t_data *data)
-{
-	if (pthread_join(data->monitor, NULL))
-	{
-		data->error = "joining threads failed";
-		return (KO);
+		i++;
 	}
 	return (OK);
 }
@@ -100,16 +73,7 @@ int	start_threads(t_data *data)
 			data->error = "multithreading failed";
 		if (data->error)
 			return (KO);
-		if (pthread_detach(data->philos[i].thread))
-			data->error = "detaching threads failed";
-		if (data->error)
-			return (KO);
 		i++;
-	}
-	if (pthread_create(&data->monitor, NULL, &monitor_routine, data))
-	{
-		data->error = "multithreading failed";
-		return (KO);
 	}
 	return (OK);
 }

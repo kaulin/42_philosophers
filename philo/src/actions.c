@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 09:30:34 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:55:02 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	print_status(t_philo *philo, char *msg)
 
 void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
 {
-	pthread_mutex_lock(fork);
-	if (philo->data->alive)
+	if (philo->data->alive_n_hungry)
+		pthread_mutex_lock(fork);
+	if (philo->data->alive_n_hungry)
 		print_status(philo, "has taken a fork");
 }
 
@@ -48,7 +49,7 @@ void	eat(t_philo *philo)
 		grab_fork(philo, philo->rfork);
 		grab_fork(philo, philo->lfork);
 	}
-	if (philo->data->alive)
+	if (philo->data->alive_n_hungry)
 	{
 		pthread_mutex_lock(philo->limiter);
 		philo->last_meal = get_time();
@@ -57,6 +58,8 @@ void	eat(t_philo *philo)
 		time_travel(philo->data->eat_time);
 		pthread_mutex_lock(philo->limiter);
 		philo->meal_count++;
+		if (philo->data->meals && philo->meal_count >= philo->data->meals)
+			*philo->hungry = 0;
 		pthread_mutex_unlock(philo->limiter);
 		release_forks(philo);
 	}
@@ -64,6 +67,6 @@ void	eat(t_philo *philo)
 
 void	think(t_philo *philo)
 {
-	if (philo->data->alive)
+	if (philo->data->alive_n_hungry)
 		print_status(philo, "is thinking");
 }

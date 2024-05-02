@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/04/30 17:43:49 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:44:23 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	clean_data(t_data *data)
 	int	i;
 
 	i = 0;
+	if (data->hungry_ones)
+		free(data->hungry_ones);
 	if (data->forks)
 	{
 		while (i < data->seats)
@@ -34,14 +36,10 @@ void	clean_data(t_data *data)
 		free(data->limiter);
 	}
 	if (data->philos)
-	{
 		free(data->philos);
-		data->philos = NULL;
-	}
-
 }
 
-static int	check_values(t_data *data)
+static int	check(t_data *data)
 {
 	if (data->seats < 1)
 		data->error = "must have at least one philosopher";
@@ -50,14 +48,14 @@ static int	check_values(t_data *data)
 	else if (data->die_time <= 0 || data->eat_time <= 0 \
 		|| data->sleep_time <= 0)
 		data->error = "give philosophers some time do eat, sleep and die";
-	else if (data->meal_target && data->meal_target < 1)
+	else if (data->meals && data->meals < 1)
 		data->error = "meal target needs to be a positive integer";
 	if (data->error)
 		return (KO);
 	return (OK);
 }
 
-static int	init_forks(t_data *data)
+static int	set_forks(t_data *data)
 {
 	int	i;
 
@@ -94,6 +92,8 @@ static int	init_philos(t_data *data)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].meal_count = 0;
+		data->philos[i].hungry = &data->hungry_ones[i];
+		*data->philos[i].hungry = 1;
 		data->philos[i].last_meal = data->start_time;
 		data->philos[i].rfork = &data->forks[i];
 		if (i == 0)
@@ -108,8 +108,9 @@ static int	init_philos(t_data *data)
 
 int	init_data(int argc, char *argv[], t_data *data) 
 {
-	data->alive = 1;
-	data->meal_target = 0;
+	data->alive_n_hungry = 1;
+	data->meals = 0;
+	data->hungry_ones = NULL;
 	data->philos = NULL;
 	data->forks = NULL;
 	data->error = NULL;
@@ -117,14 +118,15 @@ int	init_data(int argc, char *argv[], t_data *data)
 		|| get_int(&data->die_time, argv[2]) \
 		|| get_int(&data->eat_time, argv[3]) \
 		|| get_int(&data->sleep_time, argv[4]) \
-		|| (argc == 6 && get_int(&data->meal_target, argv[5])))
+		|| (argc == 6 && get_int(&data->meals, argv[5])))
 		data->error = "problem parsing arguments";
 	data->limiter = malloc(sizeof(pthread_t *));
 	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
 		data->error = "memory allocation error";
-	if (data->error)	
-		return (KO);
-	if (check_values(data) || init_forks(data) || init_philos(data))
+	data->hungry_ones = malloc(data->seats * sizeof(int));
+	if (!data->hungry_ones)
+		data->error = "memory allocation error";
+	if (data->error || check(data) || set_forks(data) || init_philos(data))
 		return (KO);
 	return (OK);
 }

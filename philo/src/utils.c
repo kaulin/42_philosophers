@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/01 15:09:38 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:44:23 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	print_data(t_data *data)
 
 	i = 0;
 	printf("DATA\n");
-	printf("dead_flag: %d\n", data->alive);
+	printf("dead_flag: %d\n", data->alive_n_hungry);
 	printf("seats: %d\n", data->seats);
-	printf("meal_target: %d\n", data->meal_target);
+	printf("meals: %d\n", data->meals);
 	printf("die_time: %d\n", data->die_time);
 	printf("eat_time: %d\n", data->eat_time);
 	printf("sleep_time: %d\n", data->sleep_time);
