@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 14:18:48 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:21:58 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*hermit_routine(void *arg)
 	while (philo->data->alive_n_hungry)
 	{
 		think(philo);
-		time_travel(philo->data->die_time + 1);
+		time_travel(philo->data->die_time + 42);
 	}
 	return (NULL);
 }
