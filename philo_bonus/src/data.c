@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 14:17:29 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:00:37 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ static int	init_philos(t_data *data)
 		*data->philos[i].hungry = 1;
 		data->philos[i].last_meal = data->start_time;
 		data->philos[i].rfork = &data->forks[i];
-		if (data->seats > 1 && i == 0)
+		if (i == 0)
 			data->philos[i].lfork = &data->forks[data->seats - 1];
-		else if (data->seats > 1)
+		else
 			data->philos[i].lfork = &data->forks[i - 1];
 		data->philos[i].limiter = data->limiter;
 		data->philos[i++].data = data;

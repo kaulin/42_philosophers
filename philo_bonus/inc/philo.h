@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 14:03:53 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:50:08 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,16 @@ int		init_data(int argc, char *argv[], t_data *data);
 // get_int_from_string.c
 int		get_int(int *dest, char *str);
 
-// threads.c
-void	*philo_routine(void *arg);
-void	*hermit_routine(void *arg);
-int		join_threads(t_data *data);
-int		start_threads(t_data *data);
-
 // time.c
 size_t	get_time_since(size_t start_time);
 size_t	get_time(void);
 void	time_travel(size_t time);
 
 // utils.c
+int		all_fed(t_data *data);
 char	*ft_strchr(const char *s, int c);
 int		ft_isdigit(int c);
+int		usage(void);
+int		fail(t_data *data);
 
 #endif
