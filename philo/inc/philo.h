@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 16:43:17 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:50:08 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	eat(t_philo *philo);
 void	nap(t_philo *philo);
 void	think(t_philo *philo);
 void	print_status(t_philo *philo, char *msg);
+void	grab_fork(t_philo *philo, pthread_mutex_t *fork);
 
 // data.c
 void	clean_data(t_data *data);

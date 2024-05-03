@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 09:22:25 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:52:08 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_status(t_philo *philo, char *msg)
 Makes the specified philosopher lock the specified fork mutex and, once 
 successful, prints the appropriate status message.
 */
-static void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
+void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
 {
 	if (philo->data->alive_n_hungry)
 		pthread_mutex_lock(fork);
@@ -46,18 +46,18 @@ hungry.
 */
 void	eat(t_philo *philo)
 {
-		pthread_mutex_lock(philo->limiter);
-		philo->last_meal = get_time();
-		pthread_mutex_unlock(philo->limiter);
-		print_status(philo, "is eating");
-		time_travel(philo->data->eat_time);
-		pthread_mutex_unlock(philo->lfork);
-		pthread_mutex_unlock(philo->rfork);
-		pthread_mutex_lock(philo->limiter);
-		philo->meal_count++;
-		if (philo->data->meals && philo->meal_count >= philo->data->meals)
-			*philo->hungry = 0;
-		pthread_mutex_unlock(philo->limiter);
+	pthread_mutex_lock(philo->limiter);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(philo->limiter);
+	print_status(philo, "is eating");
+	time_travel(philo->data->eat_time);
+	pthread_mutex_unlock(philo->lfork);
+	pthread_mutex_unlock(philo->rfork);
+	pthread_mutex_lock(philo->limiter);
+	philo->meal_count++;
+	if (philo->data->meals && philo->meal_count >= philo->data->meals)
+		*philo->hungry = 0;
+	pthread_mutex_unlock(philo->limiter);
 }
 
 /*

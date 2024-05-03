@@ -52,5 +52,6 @@ Mkfile.old
 dkms.conf
 
 # Misc
+philo
 local/*
 .vscode/*
