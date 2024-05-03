@@ -6,12 +6,18 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 16:44:35 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:44:38 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+The monitor loop iterates through the philosopher structs until:
+A. All philosophers have eaten at least the number of meals set by the 
+optional 5th program argument.
+B. The time between meals of one philosopher surpasses the alloted die_time.
+*/
 static void	monitor(t_data *data)
 {
 	int	i;
@@ -40,8 +46,10 @@ static void	monitor(t_data *data)
 }
 
 /*
-Philosophers eat, sleep and think. Odd philosophers firs grab their right 
-fork, even their left. This prevent's deadlocks.
+Philosophers eat, sleep and think. To prevent deadlocks, even philosophers 
+first think and wait for 10ms before trying to grab their left fork. Odd 
+philosophers grab their forks right away (right one first) and then start 
+eating. This delay and alternate order prevents deadlocks.
 */
 static void	*philo_routine(void *arg)
 {
@@ -52,6 +60,13 @@ static void	*philo_routine(void *arg)
 	{
 		think(philo);
 		time_travel(10);
+		grab_fork(philo, philo->lfork);
+		grab_fork(philo, philo->rfork);
+	}
+	else
+	{
+		grab_fork(philo, philo->rfork);
+		grab_fork(philo, philo->lfork);
 	}
 	while (philo->data->alive_n_hungry)
 	{
@@ -65,6 +80,9 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
+/*
+Joins the philosopher threads. 
+*/
 static int	join_threads(t_data *data)
 {
 	int	i;
@@ -82,6 +100,11 @@ static int	join_threads(t_data *data)
 	return (OK);
 }
 
+/*
+Sets the simulation start_time and copies that to the each philosopher's 
+last_meal. Then each philosopher thread is started with the corresponding 
+philo struct as a parameter.
+*/
 static int	start_threads(t_data *data)
 {
 	int		i;
@@ -102,6 +125,11 @@ static int	start_threads(t_data *data)
 	return (OK);
 }
 
+/*
+Checks the number of arguments. Initialises data. Starts the philosopher 
+threads. Starts monitor loop until end conditions are met. Joins threads. 
+Cleans data. Errors are handled after each step.
+*/
 int	main(int argc, char *argv[])
 {
 	t_data	data;

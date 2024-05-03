@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 17:06:57 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/03 09:22:25 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,13 @@ static void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
 }
 
 /*
-ADD COMMENT
+Once a philosopher has both forks, they set they set the time of their last 
+meal to current time, print eating status, suspend for eating duration, put 
+down the forks and if they've reached the meal target, mark themselves as not 
+hungry.
 */
 void	eat(t_philo *philo)
 {
-	if (philo->id % 2)
-	{
-		grab_fork(philo, philo->lfork);
-		grab_fork(philo, philo->rfork);
-	}
-	else
-	{
-		grab_fork(philo, philo->rfork);
-		grab_fork(philo, philo->lfork);
-	}
-	if (philo->data->alive_n_hungry)
-	{
 		pthread_mutex_lock(philo->limiter);
 		philo->last_meal = get_time();
 		pthread_mutex_unlock(philo->limiter);
@@ -67,7 +58,6 @@ void	eat(t_philo *philo)
 		if (philo->data->meals && philo->meal_count >= philo->data->meals)
 			*philo->hungry = 0;
 		pthread_mutex_unlock(philo->limiter);
-	}
 }
 
 /*
