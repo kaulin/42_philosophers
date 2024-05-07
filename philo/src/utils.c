@@ -6,12 +6,11 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 13:47:09 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:53:25 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 /*
 Returns a pointer to the first occurence of the character c in string s. If 
