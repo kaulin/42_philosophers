@@ -17,7 +17,7 @@ Git clone the repository, move into it and run `make` to compile the program.
 TODO
 
 ## Problems encountered
-- Remember to initialize values in the right part of code. I was initially setting the start_time right before creating the threads, but setting the last_meal for each philosopher to start_time already when initializing philosopher structs.
+- Initializing struct values in the wrong. I was initially setting the start_time right before creating the threads, but setting the last_meal for each philosopher to start_time already when initializing philosopher structs.
 - The accuracy of library functions is not always guaranteed. Using usleep for extended suspension of threads can cause suprising issues.
 
 ## Acknowledgements
