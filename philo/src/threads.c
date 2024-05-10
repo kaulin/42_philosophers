@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/07 16:53:09 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:38:05 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,7 @@ void	*philo_routine(void *arg)
 	if (philo->id % 2 == 0)
 	{
 		think(philo);
-		time_travel(10);
-		grab_fork(philo, philo->lfork);
-		grab_fork(philo, philo->rfork);
-	}
-	else
-	{
-		grab_fork(philo, philo->rfork);
-		grab_fork(philo, philo->lfork);
+		time_travel(1);
 	}
 	while (philo->data->alive_n_hungry)
 	{
