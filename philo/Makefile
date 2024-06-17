@@ -6,13 +6,13 @@
 #    By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 15:00:04 by jajuntti          #+#    #+#              #
-#    Updated: 2024/05/03 13:45:25 by jajuntti         ###   ########.fr        #
+#    Updated: 2024/06/17 14:07:09 by jajuntti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -lpthread #-static-libasan -g #-fsanitize=thread 
 
 SRC_DIR = src/
 SRC = main.c \

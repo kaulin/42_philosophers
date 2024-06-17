@@ -6,11 +6,47 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/07 16:53:25 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:54:35 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*
+Prints the provided message preceded by the time in milliseconds passed since 
+simulation start and the id number of the philosopher.
+*/
+void	print_status(t_philo *philo, char *msg)
+{
+	size_t	timestamp;
+
+	pthread_mutex_lock(philo->data->limiter);
+	timestamp = get_time_since(philo->data->start_time);
+	printf("%zums %d %s\n", timestamp, philo->id, msg);
+	pthread_mutex_unlock(philo->data->limiter);
+}
+
+int	unsatisfied(t_philo *philo)
+{
+	int	satisfaction;
+
+	satisfaction = 1;
+	pthread_mutex_lock(philo->data->limiter);
+	if (!philo->data->alive_n_hungry)
+		satisfaction = 0;
+	pthread_mutex_unlock(philo->data->limiter);
+	return (satisfaction);
+}
+
+int	get_last_meal(t_philo *philo)
+{
+	int	last_meal;
+
+	pthread_mutex_lock(philo->limiter);
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(philo->limiter);
+	return (last_meal);
+}
 
 /*
 Returns a pointer to the first occurence of the character c in string s. If 

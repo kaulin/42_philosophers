@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/10 09:38:05 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:34:55 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	*philo_routine(void *arg)
 		think(philo);
 		time_travel(1);
 	}
-	while (philo->data->alive_n_hungry)
+	while (unsatisfied(philo))
 	{
-		if (philo->data->alive_n_hungry)
+		if (unsatisfied(philo))
 			eat(philo);
-		if (philo->data->alive_n_hungry)
+		if (unsatisfied(philo))
 			nap(philo);
-		if (philo->data->alive_n_hungry)
+		if (unsatisfied(philo))
 			think(philo);
 	}
 	return (NULL);
@@ -50,7 +50,7 @@ void	*hermit_routine(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
-	while (philo->data->alive_n_hungry)
+	while (unsatisfied(philo))
 	{
 		think(philo);
 		time_travel(philo->data->die_time + 42);

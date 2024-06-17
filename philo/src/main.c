@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/03 13:50:15 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:13:22 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Prints a usage message specifying the required arguments.
 static int	usage(void)
 {
 	printf("usage: ./philo number_of_philosophers time_to_die time_to_eat");
-	printf(" /time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+	printf(" time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 	return (2);
 }
 
@@ -61,6 +61,7 @@ B. The time between meals of one philosopher surpasses the alloted die_time.
 static void	monitor(t_data *data)
 {
 	int	i;
+	int	last_meal;
 
 	i = 0;
 	while (data->alive_n_hungry)
@@ -72,7 +73,8 @@ static void	monitor(t_data *data)
 			pthread_mutex_unlock(data->limiter);
 			break ;
 		}
-		if (get_time_since(data->philos[i].last_meal) > (size_t)data->die_time)
+		last_meal = get_last_meal(&data->philos[i]);
+		if (get_time_since(last_meal) > (size_t)data->die_time)
 		{
 			pthread_mutex_lock(data->limiter);
 			data->alive_n_hungry = 0;
