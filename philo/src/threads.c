@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/17 12:34:55 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:29:41 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
-	philo = arg;
+	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 	{
 		think(philo);
@@ -90,6 +90,7 @@ int	start_threads(t_data *data)
 
 	i = 0;
 	data->start_time = get_time();
+	printf("Time: %zu.\nStarting threads at %zu. Die time %d, eat time %d, sleep time %d\n", data->start_time, get_time_since(data->start_time), data->die_time, data->eat_time, data->sleep_time);
 	while (i < data->seats)
 	{
 		this = &data->philos[i];

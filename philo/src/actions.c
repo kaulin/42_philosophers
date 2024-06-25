@@ -6,17 +6,27 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/17 12:42:24 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:45:22 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	release_forks(t_philo *philo)
+static void	release_forks(int forks_grabbed, t_philo *philo)
 {
 	pthread_mutex_lock(philo->limiter);
-	pthread_mutex_unlock(philo->lfork);
-	pthread_mutex_unlock(philo->rfork);
+	if (forks_grabbed == 1)
+	{ 
+		if (philo->id % 2 == 0)
+			pthread_mutex_unlock(philo->lfork);
+		else
+			pthread_mutex_unlock(philo->rfork);
+	}
+	else if (forks_grabbed > 1)
+	{
+		pthread_mutex_unlock(philo->rfork);
+		pthread_mutex_unlock(philo->limiter);
+	}
 	pthread_mutex_unlock(philo->limiter);
 }
 
@@ -24,12 +34,32 @@ void	release_forks(t_philo *philo)
 Makes the specified philosopher lock the specified fork mutex and, once 
 successful, prints the appropriate status message.
 */
-void	grab_fork(t_philo *philo, pthread_mutex_t *fork)
+static int	grab_forks(t_philo *philo)
 {
+	int	forks_grabbed;
+
+	forks_grabbed = 0;
 	if (unsatisfied(philo))
-		pthread_mutex_lock(fork);
+	{
+		if (philo->id % 2 == 0)
+			pthread_mutex_lock(philo->lfork);
+		else
+			pthread_mutex_lock(philo->rfork);
+		forks_grabbed++;
+	}
 	if (unsatisfied(philo))
 		print_status(philo, "has taken a fork");
+	if (unsatisfied(philo))
+	{
+		if (philo->id % 2 == 0)
+			pthread_mutex_lock(philo->rfork);
+		else
+			pthread_mutex_lock(philo->lfork);
+		forks_grabbed++;
+	}
+	if (unsatisfied(philo))
+		print_status(philo, "has taken a fork");
+	return (forks_grabbed);
 }
 
 /*
@@ -40,16 +70,9 @@ hungry.
 */
 void	eat(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		grab_fork(philo, philo->lfork);
-		grab_fork(philo, philo->rfork);
-	}
-	else
-	{
-		grab_fork(philo, philo->rfork);
-		grab_fork(philo, philo->lfork);
-	}
+	int	forks_grabbed;
+
+	forks_grabbed = grab_forks(philo);
 	if (unsatisfied(philo))
 	{
 		pthread_mutex_lock(philo->limiter);
@@ -63,7 +86,7 @@ void	eat(t_philo *philo)
 			*philo->hungry = 0;
 		pthread_mutex_unlock(philo->limiter);
 	}
-	release_forks(philo);
+	release_forks(forks_grabbed, philo);
 }
 
 /*

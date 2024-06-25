@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/17 14:13:22 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:29:27 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ B. The time between meals of one philosopher surpasses the alloted die_time.
 */
 static void	monitor(t_data *data)
 {
-	int	i;
-	int	last_meal;
+	int		i;
+	size_t	last_meal;
 
 	i = 0;
 	while (data->alive_n_hungry)
