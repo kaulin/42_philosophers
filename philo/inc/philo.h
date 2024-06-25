@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/25 11:25:55 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:02:52 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ typedef struct s_data
 	int				sleep_time;
 	size_t			start_time;
 	t_philo			*philos;
-	pthread_t		monitor;
-	pthread_mutex_t	*forks;
 	pthread_mutex_t	*limiter;
+	pthread_mutex_t	*forks;
 	char			*error;
 }	t_data;
 

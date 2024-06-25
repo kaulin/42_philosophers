@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/25 11:56:50 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:56:47 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	set_forks(t_data *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc(data->seats * sizeof(pthread_mutex_t));
+	data->forks = malloc(data->seats * sizeof(pthread_mutex_t *));
 	if (!data->forks)
 	{
 		data->error = "memory allocation error";
@@ -138,13 +138,15 @@ int	init_data(int argc, char *argv[], t_data *data)
 		|| get_int(&data->sleep_time, argv[4]) \
 		|| (argc == 6 && get_int(&data->meals, argv[5])))
 		data->error = "problem parsing arguments";
-	data->limiter = malloc(sizeof(pthread_t *));
+	if (check(data))
+		return (KO);
+	data->limiter = malloc(sizeof(pthread_mutex_t *));
 	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
 		data->error = "memory allocation error";
 	data->hungry_ones = malloc(data->seats * sizeof(int));
 	if (!data->hungry_ones)
 		data->error = "memory allocation error";
-	if (data->error || check(data) || set_forks(data) || init_philos(data))
+	if (data->error || set_forks(data) || init_philos(data))
 		return (KO);
 	return (OK);
 }
