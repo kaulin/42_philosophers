@@ -6,14 +6,14 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 13:10:53 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:05:56 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-Prints a usage message specifying the required arguments.
+Prints a usage message specifying the required arguments and returns value 2.
 */
 static int	usage(void)
 {
