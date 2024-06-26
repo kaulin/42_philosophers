@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:20:04 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:34:35 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		get_int(int *dest, char *str);
 // threads.c
 void	*philo_routine(void *arg);
 void	*hermit_routine(void *arg);
-int		join_threads(t_data *data);
+int		join_threads(int n, t_data *data);
 int		start_threads(t_data *data);
 
 // time.c

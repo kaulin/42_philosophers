@@ -6,11 +6,12 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:21:24 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:01:40 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 
 /*
 Philosophers eat, sleep and think. To prevent deadlocks, even philosophers 
@@ -24,6 +25,10 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	
+	pthread_mutex_lock(philo->data->limiter);
+	pthread_mutex_unlock(philo->data->limiter);
+	if (!unsatisfied(philo))
+		return (NULL);
 	if (philo->id % 2 == 0)
 	{
 		think(philo);
@@ -60,14 +65,14 @@ void	*hermit_routine(void *arg)
 }
 
 /*
-Joins the philosopher threads. 
+Joins n number of philosopher threads. 
 */
-int	join_threads(t_data *data)
+int	join_threads(int n, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->seats)
+	while (i < n)
 	{
 		if (pthread_join(data->philos[i].thread, NULL))
 		{
@@ -77,6 +82,22 @@ int	join_threads(t_data *data)
 		i++;
 	}
 	return (OK);
+}
+
+void	set_start_times(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->start_time = get_time();
+	while (i < data->seats)
+	{
+		printf("Hangs\n");
+		pthread_mutex_lock(data->philos[i].limiter);
+		data->philos[0].last_meal = data->start_time;
+		pthread_mutex_unlock(data->philos[i].limiter);
+		i++;
+	}
 }
 
 /*
@@ -90,11 +111,10 @@ int	start_threads(t_data *data)
 	t_philo	*this;
 
 	i = 0;
-	data->start_time = get_time();
+	pthread_mutex_lock(data->limiter);
 	while (i < data->seats)
 	{
 		this = &data->philos[i];
-		this->last_meal = data->start_time;
 		if (data->seats != 1 \
 			&& pthread_create(&this->thread, NULL, &philo_routine, this))
 			data->error = "multithreading failed";
@@ -103,10 +123,12 @@ int	start_threads(t_data *data)
 			data->error = "multithreading failed";
 		if (data->error)
 		{
-
+			join_threads(i, data);
 			return (KO);
 		}
 		i++;
 	}
+	set_start_times(data);
+	pthread_mutex_unlock(data->limiter);
 	return (OK);
 }
