@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:05:56 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:09:23 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,19 @@ KO (1), else returns OK (1).
 static int	all_fed(t_data *data)
 {
 	int	i;
+	int	all_fed;
 
 	i = 0;
-	while (i < data->seats)
+	all_fed = 0;
+	while (!all_fed && i < data->seats)
 	{
+		pthread_mutex_lock(data->limiter);
 		if (data->hungry_ones[i])
-			return (KO);
+			all_fed = 1;
+		pthread_mutex_unlock(data->limiter);
 		i++;
 	}
-	return (OK);
+	return (all_fed);
 }
 
 /*
@@ -70,7 +74,7 @@ static void	monitor(t_data *data)
 	size_t	last_meal;
 
 	i = 0;
-	while (data->alive_n_hungry)
+	while (unsatisfied(&data->philos[i]))
 	{
 		if (!all_fed(data))
 		{
@@ -112,7 +116,7 @@ int	main(int argc, char *argv[])
 	if (start_threads(data))
 		return (fail(data));
 	monitor(data);
-	if (join_threads(data))
+	if (join_threads(data->seats, data))
 		return (fail(data));
 	clean_data(data);
 	free(data);
