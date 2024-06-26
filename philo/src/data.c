@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 13:12:15 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:39:17 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	init_data(int argc, char *argv[], t_data *data)
 	data->philos = NULL;
 	data->forks = NULL;
 	data->error = NULL;
+	data->limiter = NULL;
 	if (get_int(&data->seats, argv[1]) \
 		|| get_int(&data->die_time, argv[2]) \
 		|| get_int(&data->eat_time, argv[3]) \
