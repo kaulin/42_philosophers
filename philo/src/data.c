@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 12:16:19 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:12:15 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	set_forks(t_data *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc(data->seats * sizeof(pthread_mutex_t *));
+	data->forks = malloc(data->seats * sizeof(pthread_mutex_t));
 	if (!data->forks)
 	{
 		data->error = "memory allocation error";
@@ -138,7 +138,7 @@ int	init_data(int argc, char *argv[], t_data *data)
 		data->error = "problem parsing arguments";
 	if (check(data))
 		return (KO);
-	data->limiter = malloc(sizeof(pthread_mutex_t *));
+	data->limiter = malloc(sizeof(pthread_mutex_t));
 	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
 		data->error = "memory allocation error";
 	data->hungry_ones = malloc(data->seats * sizeof(int));

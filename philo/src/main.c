@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 12:42:50 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:10:53 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char *argv[])
 {
 	t_data	*data;
 
-	data = malloc(sizeof(t_data *));
+	data = malloc(sizeof(t_data));
 	if (!data)
 		return (fail(data));
 	if (argc < 5 || argc > 6)
