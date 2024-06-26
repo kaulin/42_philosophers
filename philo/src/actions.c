@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 11:30:52 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:38:42 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	release_forks(int forks_grabbed, t_philo *philo)
 {
 	pthread_mutex_lock(philo->limiter);
 	if (forks_grabbed == 1)
-	{ 
+	{
 		if (philo->id % 2 == 0)
 			pthread_mutex_unlock(philo->lfork);
 		else
