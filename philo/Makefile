@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+         #
+#    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 15:00:04 by jajuntti          #+#    #+#              #
-#    Updated: 2024/06/26 11:26:07 by jajuntti         ###   ########.fr        #
+#    Updated: 2024/06/26 14:38:15 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -lpthread -fsanitize=thread #-static-libasan -g  
+CFLAGS = -Wall -Wextra -Werror -lpthread #-fsanitize=thread #-static-libasan -g  
 
 SRC_DIR = src/
 SRC = main.c \
