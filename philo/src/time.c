@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/05/02 16:54:42 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:04:01 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,14 @@ void	time_travel(size_t time)
 	start = get_time();
 	while (get_time() - start < time)
 		usleep(100);
+}
+
+size_t	get_last_meal(t_philo *philo)
+{
+	size_t	last_meal;
+
+	pthread_mutex_lock(philo->limiter);
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(philo->limiter);
+	return (last_meal);
 }

@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 13:28:46 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:03:54 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ int	unsatisfied(t_philo *philo)
 		satisfaction = 0;
 	pthread_mutex_unlock(philo->data->limiter);
 	return (satisfaction);
-}
-
-size_t	get_last_meal(t_philo *philo)
-{
-	size_t	last_meal;
-
-	pthread_mutex_lock(philo->limiter);
-	last_meal = philo->last_meal;
-	pthread_mutex_unlock(philo->limiter);
-	return (last_meal);
 }
 
 /*
