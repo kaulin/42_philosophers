@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 13:22:48 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:41:31 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	start_threads(t_data *data)
 
 	i = 0;
 	data->start_time = get_time();
-	printf("Time: %zu.\nStarting threads at %zu. Die time %d, eat time %d, sleep time %d\n", data->start_time, get_time_since(data->start_time), data->die_time, data->eat_time, data->sleep_time);
 	while (i < data->seats)
 	{
 		this = &data->philos[i];
