@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:19:55 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:44:18 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,21 @@ size_t	get_last_meal(t_philo *philo)
 	pthread_mutex_unlock(philo->limiter);
 	return (last_meal);
 }
+
+/*
+Sets the simulation start_time and copies that to the each philosopher's 
+last_meal. 
+*/
+void	set_start_times(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->start_time = get_time();
+	while (i < data->seats)
+	{
+		data->philos[i].last_meal = data->start_time;
+		i++;
+	}
+}
+

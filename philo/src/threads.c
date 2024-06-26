@@ -6,12 +6,20 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 16:01:40 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:46:30 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+Waits for the data limiter lock to be opened, so the simulation can start.
+*/
+void	wait_while_threads_start(t_philo *philo)
+{
+	pthread_mutex_lock(philo->data->limiter);
+	pthread_mutex_unlock(philo->data->limiter);
+}
 
 /*
 Philosophers eat, sleep and think. To prevent deadlocks, even philosophers 
@@ -25,8 +33,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	
-	pthread_mutex_lock(philo->data->limiter);
-	pthread_mutex_unlock(philo->data->limiter);
+	wait_while_threads_start(philo);
 	if (!unsatisfied(philo))
 		return (NULL);
 	if (philo->id % 2 == 0)
@@ -84,25 +91,8 @@ int	join_threads(int n, t_data *data)
 	return (OK);
 }
 
-void	set_start_times(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->start_time = get_time();
-	while (i < data->seats)
-	{
-		printf("Hangs\n");
-		pthread_mutex_lock(data->philos[i].limiter);
-		data->philos[0].last_meal = data->start_time;
-		pthread_mutex_unlock(data->philos[i].limiter);
-		i++;
-	}
-}
-
 /*
-Sets the simulation start_time and copies that to the each philosopher's 
-last_meal. Then each philosopher thread is started with the corresponding 
+Each philosopher thread is started with the corresponding 
 philo struct as a parameter.
 */
 int	start_threads(t_data *data)
@@ -111,7 +101,6 @@ int	start_threads(t_data *data)
 	t_philo	*this;
 
 	i = 0;
-	pthread_mutex_lock(data->limiter);
 	while (i < data->seats)
 	{
 		this = &data->philos[i];
@@ -123,12 +112,12 @@ int	start_threads(t_data *data)
 			data->error = "multithreading failed";
 		if (data->error)
 		{
+			data->alive_n_hungry = 0;
 			join_threads(i, data);
 			return (KO);
 		}
 		i++;
 	}
 	set_start_times(data);
-	pthread_mutex_unlock(data->limiter);
 	return (OK);
 }
