@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:04:12 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:20:04 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		start_threads(t_data *data);
 // time.c
 size_t	get_time_since(size_t start_time);
 size_t	get_time(void);
-void	time_travel(size_t time);
+void	time_travel(size_t time, t_philo *philo);
 size_t	get_last_meal(t_philo *philo);
 
 // utils.c

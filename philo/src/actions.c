@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:01:26 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:20:36 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	eat(t_philo *philo)
 		philo->last_meal = get_time();
 		pthread_mutex_unlock(philo->limiter);
 		print_status(philo, "is eating");
-		time_travel(philo->data->eat_time);
+		time_travel(philo->data->eat_time, philo);
 		pthread_mutex_lock(philo->limiter);
 		philo->meal_count++;
 		if (philo->data->meals && philo->meal_count >= philo->data->meals)
@@ -95,7 +95,7 @@ Prints the sleeping status message and suspends the thread for sleep_time ms.
 void	nap(t_philo *philo)
 {
 	print_status(philo, "is sleeping");
-	time_travel(philo->data->sleep_time);
+	time_travel(philo->data->sleep_time, philo);
 }
 
 /*

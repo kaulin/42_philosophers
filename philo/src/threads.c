@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 13:41:31 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:21:24 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	
 	if (philo->id % 2 == 0)
 	{
 		think(philo);
-		time_travel(1);
+		time_travel(1, philo);
 	}
 	while (unsatisfied(philo))
 	{
@@ -53,7 +54,7 @@ void	*hermit_routine(void *arg)
 	while (unsatisfied(philo))
 	{
 		think(philo);
-		time_travel(philo->data->die_time + 42);
+		time_travel(philo->data->die_time + 42, philo);
 	}
 	return (NULL);
 }
@@ -101,7 +102,10 @@ int	start_threads(t_data *data)
 			&& pthread_create(&this->thread, NULL, &hermit_routine, this))
 			data->error = "multithreading failed";
 		if (data->error)
+		{
+
 			return (KO);
+		}
 		i++;
 	}
 	return (OK);

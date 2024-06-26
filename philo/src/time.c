@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:04:01 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:19:55 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ size_t	get_time(void)
 Makes current thread sleep for time milliseconds. Sleeps in 0.1ms increments 
 until desired total sleep time is reached.
 */
-void	time_travel(size_t time)
+void	time_travel(size_t time, t_philo *philo)
 {
 	size_t	start;
 
 	start = get_time();
-	while (get_time() - start < time)
+	while (unsatisfied(philo) && get_time() - start < time)
 		usleep(100);
 }
 
