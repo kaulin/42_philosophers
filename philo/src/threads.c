@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 16:52:11 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:54:51 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 Waits for the data limiter lock to be opened, so the simulation can start.
 */
-void	wait_while_threads_start(t_philo *philo)
+static void	wait_while_threads_start(t_philo *philo)
 {
 	pthread_mutex_lock(philo->data->limiter);
 	pthread_mutex_unlock(philo->data->limiter);
@@ -27,7 +27,7 @@ first think and wait for 10ms before trying to grab their left fork. Odd
 philosophers grab their forks right away (right one first) and then start 
 eating. This delay and alternate order prevents deadlocks.
 */
-void	*philo_routine(void *arg)
+static void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
@@ -57,7 +57,7 @@ Philosophers eat, sleep and think. In the case of only one philosopher, that
 one is aware that they only have access to one fork and don't even bother 
 picking it up, choosing to think for the last moments of their life.
 */
-void	*hermit_routine(void *arg)
+static void	*hermit_routine(void *arg)
 {
 	t_philo	*philo;
 
