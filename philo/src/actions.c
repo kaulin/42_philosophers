@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/25 11:45:22 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:30:52 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	release_forks(int forks_grabbed, t_philo *philo)
 	else if (forks_grabbed > 1)
 	{
 		pthread_mutex_unlock(philo->rfork);
-		pthread_mutex_unlock(philo->limiter);
+		pthread_mutex_unlock(philo->lfork);
 	}
 	pthread_mutex_unlock(philo->limiter);
 }

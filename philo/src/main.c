@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/25 12:29:20 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:25:43 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	main(int argc, char *argv[])
 	monitor(&data);
 	if (join_threads(&data))
 		return (fail(&data));
+	printf("ALERT: all threads joined, cleaning data at %zu!\n", get_time_since(data.start_time));
 	clean_data(&data);
 	return (OK);
 }
