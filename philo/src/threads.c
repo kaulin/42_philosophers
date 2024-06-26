@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 11:24:46 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:22:48 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	*philo_routine(void *arg)
 		if (unsatisfied(philo))
 			think(philo);
 	}
-	printf("ALERT: exiting thread %d at %zu!\n", philo->id, get_time_since(philo->data->start_time));
 	return (NULL);
 }
 
@@ -56,7 +55,6 @@ void	*hermit_routine(void *arg)
 		think(philo);
 		time_travel(philo->data->die_time + 42);
 	}
-	printf("ALERT: exiting thread %d at %zu!\n", philo->id, get_time_since(philo->data->start_time));
 	return (NULL);
 }
 

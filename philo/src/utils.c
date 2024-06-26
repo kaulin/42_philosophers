@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/25 11:25:28 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:28:46 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	print_status(t_philo *philo, char *msg)
 
 	pthread_mutex_lock(philo->data->limiter);
 	timestamp = get_time_since(philo->data->start_time);
-	printf("%zums %d %s\n", timestamp, philo->id, msg);
+	if (philo->data->alive_n_hungry || *msg == 'd')
+		printf("%zums %d %s\n", timestamp, philo->id, msg);
 	pthread_mutex_unlock(philo->data->limiter);
 }
 
