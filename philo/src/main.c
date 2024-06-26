@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 11:25:43 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:42:50 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,14 @@ the data struct and returns KO (1).
 */
 static int	fail(t_data *data)
 {
-	printf("Error: %s\n", data->error);
-	clean_data(data);
+	if (data)
+	{
+		printf("Error: %s\n", data->error);
+		clean_data(data);
+		free(data);
+	}
+	else
+		printf("Error: memory allocation error");
 	return (KO);
 }
 
@@ -94,18 +100,21 @@ Cleans data. Errors are handled after each step.
 */
 int	main(int argc, char *argv[])
 {
-	t_data	data;
+	t_data	*data;
 
+	data = malloc(sizeof(t_data *));
+	if (!data)
+		return (fail(data));
 	if (argc < 5 || argc > 6)
 		return (usage());
-	if (init_data(argc, argv, &data))
-		return (fail(&data));
-	if (start_threads(&data))
-		return (fail(&data));
-	monitor(&data);
-	if (join_threads(&data))
-		return (fail(&data));
-	printf("ALERT: all threads joined, cleaning data at %zu!\n", get_time_since(data.start_time));
-	clean_data(&data);
+	if (init_data(argc, argv, data))
+		return (fail(data));
+	if (start_threads(data))
+		return (fail(data));
+	monitor(data);
+	if (join_threads(data))
+		return (fail(data));
+	clean_data(data);
+	free(data);
 	return (OK);
 }

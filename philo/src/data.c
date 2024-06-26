@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 12:10:18 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:16:19 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	check(t_data *data)
 Mallocs and initialises one fork mutex per philosopher present at the table. 
 Returns an error if mallocing or mutex initialising fails.
 */
-static int	set_forks(t_data *data)
+int	set_forks(t_data *data)
 {
 	int	i;
 
@@ -88,7 +88,7 @@ Initialises the s_philo struct. Returns an error if mallocing for the struct
 fails. The hunger status of the philo is linked to the hungry_ones in array 
 and the forks to the corresponding mutexes in data->forks.
 */
-static int	init_philos(t_data *data)
+int	init_philos(t_data *data)
 {
 	int	i;
 
