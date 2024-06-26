@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 16:44:18 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:51:53 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,3 @@ void	set_start_times(t_data *data)
 		i++;
 	}
 }
-
