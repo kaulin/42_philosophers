@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 12:26:43 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:33:39 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,7 @@ int	main(int argc, char *argv[])
 		return (fail(data));
 	pthread_mutex_lock(data->start_mutex);
 	if (make_threads(data))
-	{
-		pthread_mutex_unlock(data->start_mutex);
 		return (fail(data));
-	}
 	pthread_mutex_unlock(data->start_mutex);
 	monitor(data);
 	if (join_threads(data->seats, data))

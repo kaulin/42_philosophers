@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 09:35:30 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:40:39 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ void	set_start_times(t_data *data)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(data->limiter);
 	data->start_time = get_time();
 	while (i < data->seats)
 	{
 		data->philos[i].last_meal = data->start_time;
 		i++;
 	}
+	pthread_mutex_unlock(data->limiter);
 }

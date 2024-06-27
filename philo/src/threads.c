@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:49:00 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:34:19 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int	make_threads(t_data *data)
 		if (data->error)
 		{
 			data->alive_n_hungry = 0;
+			pthread_mutex_unlock(data->start_mutex);
 			join_threads(i, data);
 			return (KO);
 		}
