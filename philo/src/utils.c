@@ -6,11 +6,29 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 09:34:40 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:23:24 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*
+Checks that the values parsed from arguments are within acceptable ranges 
+and if not, sets a specific error message.
+*/
+int	check(t_data *data)
+{
+	if (data->seats < 1)
+		data->error = "must have at least one philosopher";
+	else if (data->die_time < 0 || data->eat_time < 0 \
+		|| data->sleep_time < 0)
+		data->error = "times need to be between 0 and 2147483647";
+	else if (data->meals && data->meals < 1)
+		data->error = "the philosophers need at least one meal";
+	if (data->error)
+		return (KO);
+	return (OK);
+}
 
 /*
 Prints the provided message preceded by the time in milliseconds passed since 

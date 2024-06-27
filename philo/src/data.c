@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 09:55:32 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:36:22 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,14 @@ void	clean_data(t_data *data)
 		pthread_mutex_destroy(data->limiter);
 		free(data->limiter);
 	}
+	if (data->start_mutex)
+	{
+		pthread_mutex_destroy(data->start_mutex);
+		free(data->start_mutex);
+	}
 	if (data->philos)
 		free(data->philos);
-}
-
-/*
-Checks that the values parsed from arguments are within acceptable ranges 
-and if not, sets a specific error message.
-*/
-static int	check(t_data *data)
-{
-	if (data->seats < 1)
-		data->error = "must have at least one philosopher";
-	else if (data->die_time < 0 || data->eat_time < 0 \
-		|| data->sleep_time < 0)
-		data->error = "times need to be between 0 and 2147483647";
-	else if (data->meals && data->meals < 1)
-		data->error = "the philosophers need at least one meal";
-	if (data->error)
-		return (KO);
-	return (OK);
+	free(data);
 }
 
 /*
@@ -118,9 +106,29 @@ int	init_philos(t_data *data)
 }
 
 /*
+Allocates space for the mutexes within data and initialises them. Returns KO 
+on error.
+*/
+int	init_mutexes(t_data *data)
+{
+	data->limiter = malloc(sizeof(pthread_mutex_t));
+	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
+	{
+		data->error = "memory allocation error";
+		return (KO);
+	}
+	data->start_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!data->start_mutex || pthread_mutex_init(data->start_mutex, NULL))
+	{
+		data->error = "memory allocation error";
+		return (KO);
+	}
+	return (OK);
+}
+
+/*
 Initialises the given data struct with provided arguments. Converts arguments 
-to integers, checks their values, sets the fork mutexes and initialises the 
-philo structs.
+to integers, checks their values, initialises mutexes and sets up hungry array.
 */
 int	init_data(int argc, char *argv[], t_data *data)
 {
@@ -131,21 +139,18 @@ int	init_data(int argc, char *argv[], t_data *data)
 	data->forks = NULL;
 	data->error = NULL;
 	data->limiter = NULL;
-	if (get_int(&data->seats, argv[1]) \
-		|| get_int(&data->die_time, argv[2]) \
+	data->start_mutex = NULL;
+	if (get_int(&data->seats, argv[1]) || get_int(&data->die_time, argv[2]) \
 		|| get_int(&data->eat_time, argv[3]) \
 		|| get_int(&data->sleep_time, argv[4]) \
 		|| (argc == 6 && get_int(&data->meals, argv[5])))
 		data->error = "problem parsing arguments";
-	if (check(data))
+	if (check(data) || init_mutexes(data))
 		return (KO);
-	data->limiter = malloc(sizeof(pthread_mutex_t));
-	if (!data->limiter || pthread_mutex_init(data->limiter, NULL))
-		data->error = "memory allocation error";
 	data->hungry_ones = malloc(data->seats * sizeof(int));
 	if (!data->hungry_ones)
 		data->error = "memory allocation error";
-	if (data->error || set_forks(data) || init_philos(data))
+	if (data->error)
 		return (KO);
 	return (OK);
 }

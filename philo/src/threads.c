@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 16:54:51 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:33:32 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ Waits for the data limiter lock to be opened, so the simulation can start.
 */
 static void	wait_while_threads_start(t_philo *philo)
 {
-	pthread_mutex_lock(philo->data->limiter);
-	pthread_mutex_unlock(philo->data->limiter);
+	pthread_mutex_lock(philo->data->start_mutex);
+	pthread_mutex_unlock(philo->data->start_mutex);
 }
 
 /*
