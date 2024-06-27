@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 09:52:27 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:55:32 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static int	check(t_data *data)
 {
 	if (data->seats < 1)
 		data->error = "must have at least one philosopher";
-	else if (data->die_time <= 0 || data->eat_time <= 0 \
-		|| data->sleep_time <= 0)
+	else if (data->die_time < 0 || data->eat_time < 0 \
+		|| data->sleep_time < 0)
 		data->error = "times need to be between 0 and 2147483647";
 	else if (data->meals && data->meals < 1)
 		data->error = "the philosophers need at least one meal";
