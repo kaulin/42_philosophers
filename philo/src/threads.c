@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:37:42 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:49:00 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	*philo_routine(void *arg)
 	if (philo->id % 2 == 0)
 	{
 		think(philo);
-		time_travel(1, philo);
+		time_travel(3, philo);
 	}
 	while (unsatisfied(philo))
 	{
