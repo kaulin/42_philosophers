@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:40:17 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:26:43 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ int	main(int argc, char *argv[])
 {
 	t_data	*data;
 
+	if (argc < 5 || argc > 6)
+		return (usage());
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (fail(data));
-	if (argc < 5 || argc > 6)
-		return (usage());
 	if (init_data(argc, argv, data) || set_forks(data) || init_philos(data))
 		return (fail(data));
 	pthread_mutex_lock(data->start_mutex);
