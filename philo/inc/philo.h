@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:44 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:25:27 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:40:27 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		get_int(int *dest, char *str);
 
 // threads.c
 int		join_threads(int n, t_data *data);
-int		start_threads(t_data *data);
+int		make_threads(t_data *data);
 
 // time.c
 size_t	get_time_since(size_t start_time);

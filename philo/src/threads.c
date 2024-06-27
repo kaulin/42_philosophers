@@ -6,14 +6,14 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:33:32 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:37:42 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-Waits for the data limiter lock to be opened, so the simulation can start.
+Waits for the start mutex lock to be opened, so the simulation can start.
 */
 static void	wait_while_threads_start(t_philo *philo)
 {
@@ -91,10 +91,10 @@ int	join_threads(int n, t_data *data)
 }
 
 /*
-Each philosopher thread is started with the corresponding 
+Each philosopher thread is made with the corresponding 
 philo struct as a parameter.
 */
-int	start_threads(t_data *data)
+int	make_threads(t_data *data)
 {
 	int		i;
 	t_philo	*this;

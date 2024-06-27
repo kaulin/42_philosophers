@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:33:07 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:40:17 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,10 @@ static void	monitor(t_data *data)
 }
 
 /*
-Checks the number of arguments. Initialises data. Starts the philosopher 
-threads. Starts monitor loop until end conditions are met. Joins threads. 
-Cleans data. Errors are handled after each step.
+Checks the number of arguments. Initialises data struct. Sets forks mutexes. 
+Initialises philo struct. Starts the philosopher threads. Starts monitor loop 
+until end conditions are met. Joins threads. Cleans data. Errors are handled 
+after each step.
 */
 int	main(int argc, char *argv[])
 {
@@ -114,7 +115,7 @@ int	main(int argc, char *argv[])
 	if (init_data(argc, argv, data) || set_forks(data) || init_philos(data))
 		return (fail(data));
 	pthread_mutex_lock(data->start_mutex);
-	if (start_threads(data))
+	if (make_threads(data))
 	{
 		pthread_mutex_unlock(data->start_mutex);
 		return (fail(data));
