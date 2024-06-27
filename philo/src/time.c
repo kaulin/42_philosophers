@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 16:51:53 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:35:30 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	time_travel(size_t time, t_philo *philo)
 		usleep(100);
 }
 
+/*
+Returns the time when the specific philo last started eating.
+*/
 size_t	get_last_meal(t_philo *philo)
 {
 	size_t	last_meal;

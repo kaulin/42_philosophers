@@ -6,12 +6,15 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:44:52 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/26 15:20:36 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:37:47 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+Makes the specific philo unlock as many forks as it was holding.
+*/
 static void	release_forks(int forks_grabbed, t_philo *philo)
 {
 	pthread_mutex_lock(philo->limiter);
@@ -31,8 +34,9 @@ static void	release_forks(int forks_grabbed, t_philo *philo)
 }
 
 /*
-Makes the specified philosopher lock the specified fork mutex and, once 
-successful, prints the appropriate status message.
+Makes the specified philosopher lock the specified fork mutex(es) and, once 
+successful, prints the appropriate status message. Retuns the number of forks 
+grabbed.
 */
 static int	grab_forks(t_philo *philo)
 {

@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:42:40 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 09:30:19 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:34:40 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	print_status(t_philo *philo, char *msg)
 	pthread_mutex_unlock(philo->data->limiter);
 }
 
+/*
+Returns 1 if all the philosophers are still alive and at least one of them is 
+hungry. Otherwise returns 0.
+*/
 int	unsatisfied(t_philo *philo)
 {
 	int	satisfaction;
