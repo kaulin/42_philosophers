@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:46:30 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 12:34:19 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/06/30 12:19:04 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	*hermit_routine(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
+	wait_while_threads_start(philo);
 	while (unsatisfied(philo))
 	{
 		think(philo);
