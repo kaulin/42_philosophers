@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:43:42 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 12:33:39 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/07/31 10:41:32 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	fail(t_data *data)
 	{
 		printf("Error: %s\n", data->error);
 		clean_data(data);
-		free(data);
 	}
 	else
 		printf("Error: memory allocation error");
