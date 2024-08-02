@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:33:32 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 12:40:39 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:31:40 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	time_travel(size_t time, t_philo *philo)
 {
 	size_t	start;
 
+	if (time < 1)
+		return ;
 	start = get_time();
 	while (unsatisfied(philo) && get_time() - start < time)
 		usleep(100);
