@@ -6,7 +6,7 @@
 /*   By: jajuntti <jajuntti@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:12:25 by jajuntti          #+#    #+#             */
-/*   Updated: 2024/06/27 10:36:22 by jajuntti         ###   ########.fr       */
+/*   Updated: 2024/08/02 09:22:16 by jajuntti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	init_data(int argc, char *argv[], t_data *data)
 		|| get_int(&data->eat_time, argv[3]) \
 		|| get_int(&data->sleep_time, argv[4]) \
 		|| (argc == 6 && get_int(&data->meals, argv[5])))
-		data->error = "problem parsing arguments";
+		data->error = "improper argument format or argument out of int range";
 	if (check(data) || init_mutexes(data))
 		return (KO);
 	data->hungry_ones = malloc(data->seats * sizeof(int));
