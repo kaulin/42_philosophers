@@ -21,7 +21,7 @@ Git clone the repository, move into it and run `make` to compile the program.
 - The accuracy of library functions is not always guaranteed. Using usleep for extended suspension of threads can cause suprising issues.
 
 ## Acknowledgements
-- Peer evaluators: David Horvath, [Emmi Järvinen](https://github.com/ejarvinen), [Inka Niska](https://github.com/inkaonkala), Arttu Salo, [https://github.com/SpaMillie](https://github.com/SpaMillie), [Simos Tigkas](https://github.com/SimosTigkas), Ilmari Välimäki
+- Peer evaluators: David Horvath, [Emmi Järvinen](https://github.com/ejarvinen), [Inka Niska](https://github.com/inkaonkala), Arttu Salo, [Milica Spasic](https://github.com/SpaMillie), [Simos Tigkas](https://github.com/SimosTigkas), Ilmari Välimäki
 
 ## Resources
 Combeau, M. (2022, November 2). Threads, mutexes and concurrent programming in C. https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/
